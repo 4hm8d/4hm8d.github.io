@@ -1,0 +1,54 @@
+<!-- Enhanced SEO & Social Discovery Metadata -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{% if page.image %}
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+{% elsif site.social_preview_image %}
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+{% endif %}
+{% if page.tags and page.tags.size > 0 %}
+  <meta name="keywords" content="{{ page.tags | join: ', ' }}, Templar Protocol, NEAR Protocol, NEP-509, Immunefi 77956, smart contract security, DeFi post-mortem, Ahmed Waqas, 4hm8d">
+{% endif %}
+{% if page.layout == 'post' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Person",
+    "name": "Ahmed Waqas",
+    "alternateName": "4hm8d",
+    "url": "https://x.com/4hm8d",
+    "sameAs": [
+      "https://x.com/4hm8d",
+      "https://github.com/4hm8d",
+      "https://4hm8d.github.io"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Broken Invariants",
+    "url": "https://4hm8d.github.io"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page.url | absolute_url }}"
+  },
+  "keywords": {{ page.tags | join: ", " | jsonify }},
+  "proficiencyLevel": "Expert",
+  "about": [
+    {"@type": "Thing", "name": "Templar Protocol"},
+    {"@type": "Thing", "name": "NEAR Protocol"},
+    {"@type": "Thing", "name": "NEP-509 Stateless Validation"},
+    {"@type": "Thing", "name": "Smart Contract Vulnerability Disclosure"}
+  ]
+}
+</script>
+{% endif %}

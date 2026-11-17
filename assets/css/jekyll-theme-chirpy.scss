@@ -1,0 +1,50 @@
+---
+---
+
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}',
+  $main-content-max-width: 1480px
+);
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+/* Wider desktop reading column for technical writeups, tables, and code blocks */
+@media all and (min-width: 1200px) {
+  #main-wrapper > .container {
+    max-width: 1420px;
+  }
+
+  #main-wrapper > .container > .row > main.col-xl-9 {
+    flex: 0 0 78%;
+    max-width: 78%;
+  }
+
+  #panel-wrapper.col-xl-3 {
+    flex: 0 0 22%;
+    max-width: 22%;
+  }
+}
+
+@media all and (min-width: 1650px) {
+  #main-wrapper > .container {
+    max-width: 1520px;
+  }
+}
+
+/* Crisp full-width tables and evidence figures */
+.content .table-wrapper > table {
+  width: 100%;
+}
+
+.content img {
+  border-radius: 8px;
+}
+
+
