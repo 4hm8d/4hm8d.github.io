@@ -1,6 +1,6 @@
 ---
 title: "Templar Protocol (NEAR): Keyless Withdrawal-Queue Freeze & Unpaid $100K Ruling"
-description: "Technical post-mortem of Immunefi #77956 on Templar Protocol: how an 8 TGas NEAR callback and NEP-509's 4 MB proof limit permanently froze keyless markets."
+description: "Technical post-mortem of Immunefi #77956 on Templar Protocol: how an 8 TGas NEAR callback and NEP-509's 4 MB proof limit can permanently freeze keyless markets."
 date: 2026-11-17 12:00:00 +0000
 author: 4hm8d
 categories: [Security Research, Vulnerability Disclosure]
@@ -22,7 +22,7 @@ image:
 
 ## 1. Executive Summary
 
-On May 13, 2026, I submitted Immunefi Report #77956 disclosing a critical supply-withdrawal freeze in Templar Protocol on NEAR, expanding scope on May 16 to 18 lending markets holding ~$4.75M. Two defects in Templar's withdrawal queue let an attacker trigger a fixed 8 TGas callback failure that refunds 100% of principal while leaving zero-balance "ghost" entries behind, forcing subsequent withdrawal calls into NEAR's 4.0 MB NEP-509 storage-proof limit where execution aborts and every removal reverts. One market in scope, `ixlm-ixlmusdc.v1.tmplr.near` ($1,500,766.54 USDC active supply), had deleted its sole `FullAccess` key 114 days earlier, leaving no admin, pause, or upgrade recovery path.
+On May 13, 2026, I submitted Immunefi Report #77956 disclosing a critical supply-withdrawal freeze vulnerability in Templar Protocol on NEAR, expanding scope on May 16 to 18 lending markets holding ~$4.75M. Two defects in Templar's withdrawal queue let an attacker trigger a fixed 8 TGas callback failure that refunds 100% of principal while leaving zero-balance "ghost" entries behind, forcing subsequent withdrawal calls into NEAR's 4.0 MB NEP-509 storage-proof limit where execution aborts and every removal reverts. One market in scope, `ixlm-ixlmusdc.v1.tmplr.near` ($1,500,766.54 USDC active supply), had deleted its sole `FullAccess` key 114 days earlier, leaving no admin, pause, or upgrade recovery path.
 
 Over the next five months, triage stalled on Immunefi, prompting the platform to pause (July 2) and remove (August 7) Templar's public bug bounty program for repeated SLA breaches. On-chain, remediation moved ahead: six days after my July 8 email warning CEO @RoyalF00l about the keyless pool, a keyed replacement (`ixlm-ixlmusdc-1.v1.tmplr.near`) deployed and $1,441,627.12 USDC (96% of supply, signed by an account gas-funded via `templarllc.near` → `simrat.near`) moved into it. After confirming my September 30 1,000 TGas forked-mainnet proof on October 2, Templar upgraded 22 keyed markets (~$15.40M active supply) on October 7–8. Nine hours later, the team offered a $2,500 goodwill payout and claimed #77956 duplicated Certora finding L-05, even though git history shows the vulnerable batch loop landed 40 days after Certora's manual review closed.
 
